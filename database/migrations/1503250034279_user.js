@@ -1,4 +1,3 @@
-/** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema');
 
 class UserSchema extends Schema {
@@ -14,6 +13,10 @@ class UserSchema extends Schema {
         .notNullable()
         .unique();
       table.string('password', 60).notNullable();
+      table
+        .integer('is_admin')
+        .notNullable()
+        .default(0);
       table.timestamps();
     });
   }
