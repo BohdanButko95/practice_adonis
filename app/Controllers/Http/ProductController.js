@@ -1,8 +1,8 @@
 const Product = use('App/Models/Product');
 
 class ProductController {
-  async index() {
-    return Product.all();
+  async index({ request, response }) {
+    return response.json(await Product.getEntities(request.all()));
   }
 
   async store({ request, response }) {
