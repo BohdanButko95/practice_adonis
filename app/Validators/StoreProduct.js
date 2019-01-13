@@ -1,4 +1,3 @@
-// TODO: Extend validator: add 'exists'. Add 'exists' validation to type_id & user_id. Add validation to price
 const CustomValidator = use('App/Validators/CustomValidator');
 
 class StoreProduct extends CustomValidator {
@@ -6,8 +5,8 @@ class StoreProduct extends CustomValidator {
     return {
       name: 'required',
       price: 'required',
-      type_id: 'required',
-      user_id: 'required'
+      type_id: 'required|exists:product_types,id',
+      user_id: 'required|exists:users,id'
     };
   }
 
@@ -16,7 +15,9 @@ class StoreProduct extends CustomValidator {
       'name.required': 'You must provide a name',
       'price.required': 'You must provide a price',
       'type_id.required': 'You must provide a type_id',
-      'user_id.required': 'You must provide a user_id'
+      'type_id.exists': "Provided type_id doesn't exists",
+      'user_id.required': 'You must provide a user_id',
+      'user_id.exists': "Provided user_id doesn't exists"
     };
   }
 }
