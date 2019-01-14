@@ -18,12 +18,12 @@ Route.group(() => {
   Route.patch('products/types/:id', 'ProductTypeController.update');
   Route.delete('products/types/:id', 'ProductTypeController.destroy');
 
-  Route.get('products/types/:type_id/attributes', 'ProductTypeAttributeController.index');
-  Route.post('products/types/:type_id/attributes', 'ProductTypeAttributeController.store');
-  Route.get('products/types/:type_id/attributes/:attr_id', 'ProductTypeAttributeController.show');
-  Route.put('products/types/:type_id/attributes/:attr_id', 'ProductTypeAttributeController.update');
-  Route.patch('products/types/:type_id/attributes/:attr_id', 'ProductTypeAttributeController.update');
-  Route.delete('products/types/:type_id/attributes/:attr_id', 'ProductTypeAttributeController.destroy');
+  Route.get('products/types/:typeId/attributes', 'ProductTypeAttributeController.index');
+  Route.post('products/types/:typeId/attributes', 'ProductTypeAttributeController.store');
+  Route.get('products/types/:typeId/attributes/:attrId', 'ProductTypeAttributeController.show');
+  Route.put('products/types/:typeId/attributes/:attrId', 'ProductTypeAttributeController.update');
+  Route.patch('products/types/:typeId/attributes/:attrId', 'ProductTypeAttributeController.update');
+  Route.delete('products/types/:typeId/attributes/:attrId', 'ProductTypeAttributeController.destroy');
 
   Route.get('products', 'ProductController.index');
   Route.post('products', 'ProductController.store');
@@ -32,10 +32,10 @@ Route.group(() => {
   Route.patch('products/:id', 'ProductController.update');
   Route.delete('products/:id', 'ProductController.destroy');
 
-  Route.get('products/:prod_id/attributes', 'ProductAttributeController.index');
-  Route.post('products/:prod_id/attributes', 'ProductAttributeController.store');
-  Route.get('products/:prod_id/attributes/:attr_id', 'ProductAttributeController.show');
-  Route.put('products/:prod_id/attributes/:attr_id', 'ProductAttributeController.update');
-  Route.patch('products/:prod_id/attributes/:attr_id', 'ProductAttributeController.update');
-  Route.delete('products/:prod_id/attributes/:attr_id', 'ProductAttributeController.destroy');
+  Route.get('products/:prodId/attributes', 'ProductAttributeController.index');
+  Route.post('products/:prodId/attributes', 'ProductAttributeController.store');
+  Route.get('products/:prodId/attributes/:attrId', 'ProductAttributeController.show');
+  Route.put('products/:prodId/attributes/:attrId', 'ProductAttributeController.update');
+  Route.patch('products/:prodId/attributes/:attrId', 'ProductAttributeController.update');
+  Route.delete('products/:prodId/attributes/:attrId', 'ProductAttributeController.destroy');
 }).prefix('api/v1');
