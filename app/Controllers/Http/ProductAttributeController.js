@@ -1,24 +1,24 @@
 const ProductAttribute = use('App/Models/ProductAttribute');
 
 class ProductAttributeController {
-  async index() {
-    return ProductAttribute.all();
+  async index({ params, response }) {
+    return response.json(await ProductAttribute.getEntities(params.prodId));
   }
 
-  async store({ request, response }) {
-    return response.json(await ProductAttribute.storeEntity(request.post()));
+  async store({ params, request, response }) {
+    return response.json(await ProductAttribute.storeEntity(params.prodId, request.post()));
   }
 
-  async show({ params }) {
-    return ProductAttribute.findOrFail(params.id);
+  async show({ params, response }) {
+    return response.json(await ProductAttribute.getEntity(params.attrId));
   }
 
   async update({ params, request, response }) {
-    return response.json(await ProductAttribute.updateEntity(params.id, request.post()));
+    return response.json(await ProductAttribute.updateEntity(params.attrId, request.post()));
   }
 
   async destroy({ params, response }) {
-    return response.json(await ProductAttribute.deleteEntity(params.id));
+    return response.json(await ProductAttribute.deleteEntity(params.attrId));
   }
 }
 
