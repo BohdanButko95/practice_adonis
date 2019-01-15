@@ -1,4 +1,4 @@
-const Typ = use('Type');
+const Typ = use('App/Models/Type');
 
 class Type {
   static async getEntities() {

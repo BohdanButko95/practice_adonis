@@ -12,7 +12,7 @@ class Attribute {
     return type
       .attributes()
       .where('id', id)
-      .fetch();
+      .first();
   }
 
   static async storeEntity(typeId, { name }) {
@@ -25,10 +25,10 @@ class Attribute {
 
   static async updateEntity(typeId, id, { name }) {
     const type = await Type.findOrFail(typeId);
-    const attr = type
+    const attr = await type
       .attributes()
       .where('id', id)
-      .fetch();
+      .first();
     attr.merge({ name });
     await attr.save();
 
@@ -40,7 +40,7 @@ class Attribute {
     const attr = type
       .attributes()
       .where('id', id)
-      .fetch();
+      .first();
     await attr.delete();
 
     return { message: `Attribute (ID: ${attr.id}) was deleted` };
