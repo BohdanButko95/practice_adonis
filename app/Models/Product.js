@@ -1,6 +1,6 @@
-const Model = use('Model');
+const Entity = require('./Entity');
 
-class Product extends Model {
+class Product extends Entity {
   static get updatedAtColumn() {
     return null;
   }
