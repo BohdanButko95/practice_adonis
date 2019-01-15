@@ -34,18 +34,40 @@ class Product {
     return Prod.findOrFail(id);
   }
 
-  static async storeEntity({ name, price, typeId, userId }) {
+  static async storeEntity({ name, price, typeId, userId, attributes }) {
     const product = new Prod();
     product.fill({ name, price, type_id: typeId, user_id: userId });
     await product.save();
 
+    const atrs = JSON.parse(attributes);
+    const promiseProduct = [];
+    Object.keys(atrs).forEach(atr => {
+      const prms = product.attributes().attach(atr, row => {
+        row.value = atrs[atr];
+      });
+      promiseProduct.push(prms);
+    });
+    await Promise.all(promiseProduct);
+
     return product;
   }
 
-  static async updateEntity(id, { name, price, typeId, userId }) {
+  static async updateEntity(id, { name, price, typeId, userId, attributes }) {
     const product = await Prod.findOrFail(id);
     product.merge({ name, price, type_id: typeId, user_id: userId });
     await product.save();
+
+    const atrs = JSON.parse(attributes);
+    const promiseProduct = [];
+    Object.keys(atrs).forEach(atr => {
+      const prms = product
+        .attributes()
+        .pivotQuery()
+        .where('attribute_id', atr)
+        .update({ value: atrs[atr] });
+      promiseProduct.push(prms);
+    });
+    await Promise.all(promiseProduct);
 
     return product;
   }
