@@ -1,17 +1,23 @@
-/*
-|--------------------------------------------------------------------------
-| Routes
-|--------------------------------------------------------------------------
-|
-| Http routes are entry points to your web application. You can create
-| routes for different URL's and bind Controller actions to them.
-|
-| A complete guide on routing is available here.
-| http://adonisjs.com/docs/4.0/routing
-|
-*/
-
-/** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route');
 
-Route.get('/', () => ({ status: 'Ok', version: '1.0.0' }));
+Route.group(() => {
+  Route.post('login', 'AuthController.login').middleware('guest');
+
+  Route.get('types', 'TypeController.index');
+  Route.get('types/:id', 'TypeController.show');
+  Route.post('types', 'TypeController.store');
+  Route.put('types/:id', 'TypeController.update');
+  Route.delete('types/:id', 'TypeController.destroy');
+
+  Route.get('types/:typeId/attributes/', 'AttributeController.index');
+  Route.get('types/:typeId/attributes/:id', 'AttributeController.show');
+  Route.post('types/:typeId/attributes/', 'AttributeController.store');
+  Route.put('types/:typeId/attributes/:id', 'AttributeController.update');
+  Route.delete('types/:typeId/attributes/:id', 'AttributeController.destroy');
+
+  Route.get('products', 'ProductController.index');
+  Route.get('products/:id', 'ProductController.show');
+  Route.post('products', 'ProductController.store');
+  Route.put('products/:id', 'ProductController.update');
+  Route.delete('products/:id', 'ProductController.destroy');
+}).prefix('api');
