@@ -6,15 +6,15 @@ class Product extends Model {
   }
 
   type() {
-    this.belongsTo('App/Models/Type');
+    return this.belongsTo('App/Models/Type');
   }
 
   user() {
-    this.belongsTo('App/Models/User');
+    return this.belongsTo('App/Models/User');
   }
 
   attributes() {
-    this.belongsToMany('App/Models/Attribute').pivotModel('App/Models/ProductAttribute');
+    return this.belongsToMany('App/Models/Attribute').pivotModel('App/Models/ProductAttribute');
   }
 }
 
