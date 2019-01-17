@@ -14,7 +14,9 @@ class Product extends Entity {
   }
 
   attributes() {
-    return this.belongsToMany('App/Models/Attribute').pivotModel('App/Models/ProductAttribute');
+    return this.belongsToMany('App/Models/Attribute')
+      .pivotModel('App/Models/ProductAttribute')
+      .withPivot(['value']);
   }
 }
 
