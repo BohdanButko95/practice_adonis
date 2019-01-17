@@ -1,37 +1,25 @@
 const Prod = use('App/Models/Product');
-const Database = use('Database');
 
 class Product {
-  static async getEntities({ typeId, name, ownerId, price, createdAt }) {
-    const filterByType = typeId || null;
-    const filterByName = name || null;
-    const filterByOwner = ownerId || null;
-    const sortByPrice = ['asc', 'desc'].includes(price) ? price : null;
-    const sortByDate = ['asc', 'desc'].includes(createdAt) ? createdAt : null;
+  static async getEntities({ filters = null, order = 'id', sort = 'desc' }) {
+    const filterFields = ['name', 'type_id', 'user_id'];
 
-    const query = Database.table('products');
-
-    if (filterByType) {
-      query.where('type_id', Number(filterByType));
-    }
-    if (filterByName) {
-      query.where('name', 'LIKE', `%${filterByName}%`);
-    }
-    if (filterByOwner) {
-      query.where('user_id', Number(filterByOwner));
-    }
-    if (sortByPrice) {
-      query.orderBy('price', sortByPrice);
-    }
-    if (sortByDate) {
-      query.orderBy('created_at', sortByDate);
-    }
-
-    return query;
+    return this.query()
+      .where(function() { //eslint-disable-line
+        if (filters && typeof filters === 'object') {
+          Object.keys(filters).map(field => { //eslint-disable-line
+            if (filterFields.includes(field)) {
+              this.where(field, filters[field]);
+            }
+          });
+        }
+      })
+      .orderBy(order, sort)
+      .fetch();
   }
 
   static async getEntity(id) {
-    return Prod.findOrFail(id);
+    return this.findOrFail(id);
   }
 
   static async storeEntity({ name, price, typeId, userId, attributes }) {
@@ -76,7 +64,7 @@ class Product {
     const product = await Prod.findOrFail(id);
     await product.delete();
 
-    return { message: `Prode (ID: ${product.id}) was deleted` };
+    return { message: `Product (ID: ${product.id}) was deleted` };
   }
 }
 
