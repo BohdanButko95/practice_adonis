@@ -5,6 +5,9 @@ class Product {
     const filterFields = ['name', 'type_id', 'user_id'];
 
     return this.query()
+      .with('user')
+      .with('attributes')
+      .with('type')
       .where(function() { //eslint-disable-line
         if (filters && typeof filters === 'object') {
           Object.keys(filters).map(field => { //eslint-disable-line
@@ -19,7 +22,12 @@ class Product {
   }
 
   static async getEntity(id) {
-    return this.findOrFail(id);
+    return this.query()
+      .with('user')
+      .with('attributes')
+      .with('type')
+      .where('id', id)
+      .first();
   }
 
   static async storeEntity({ name, price, typeId, userId, attributes }) {
