@@ -1,24 +1,26 @@
 const Type = use('App/Models/Type');
 
 class TypeController {
-  async index({ response }) {
-    return response.json(await Type.getEntities());
+  async index() {
+    return Type.getEntities();
   }
 
-  async show({ params, response }) {
-    return response.json(await Type.getEntity(params.id));
+  async show({ params }) {
+    return Type.getEntity(params.id);
   }
 
   async store({ request, response }) {
-    return response.json(await Type.storeEntity(request.post()));
+    response.status(201);
+    return Type.storeEntity(request.post());
   }
 
-  async update({ params, request, response }) {
-    return response.json(await Type.updateEntity(params.id, request.post()));
+  async update({ params, request }) {
+    return Type.updateEntity(params.id, request.post());
   }
 
   async destroy({ params, response }) {
-    return response.json(await Type.deleteEntity(params.id));
+    await Type.deleteEntity(params.id);
+    return response.status(204).send();
   }
 }
 

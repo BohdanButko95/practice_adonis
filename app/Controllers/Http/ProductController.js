@@ -1,24 +1,26 @@
 const Product = use('App/Models/Product');
 
 class ProductController {
-  async index({ request, response }) {
-    return response.json(await Product.getEntities(request.all()));
+  async index({ request }) {
+    return Product.getEntities(request.all());
   }
 
-  async show({ params, response }) {
-    return response.json(await Product.getEntity(params.id));
+  async show({ params }) {
+    return Product.getEntity(params.id);
   }
 
   async store({ request, response }) {
-    return response.json(await Product.storeEntity(request.post()));
+    response.status(201);
+    return Product.storeEntity(request.post());
   }
 
-  async update({ params, request, response }) {
-    return response.json(await Product.updateEntity(params.id, request.post()));
+  async update({ params, request }) {
+    return Product.updateEntity(params.id, request.post());
   }
 
   async destroy({ params, response }) {
-    return response.json(await Product.deleteEntity(params.id));
+    await Product.deleteEntity(params.id);
+    return response.status(204).send();
   }
 }
 
